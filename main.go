@@ -2,25 +2,39 @@ package main
 
 import (
 	"archive/zip"
+	_ "embed"
 	"fmt"
 	"io"
 	"net/http"
 	"os"
 	"os/exec"
 	"path/filepath"
+
+	yaml "gopkg.in/yaml.v3"
 )
 
 const (
 	// 改這裡
-	MODPACK_URL  = "https://mediafilez.forgecdn.net/files/6936/279/ATM10%20To%20the%20Sky-1.2.1.zip"
-	MODPACK_NAME = "[01.014.00] atm 10 sky"
+	// MODPACK_URL  = "https://mediafilez.forgecdn.net/files/6936/279/ATM10%20To%20the%20Sky-1.2.1.zip"
+	// MODPACK_NAME = "[01.014.00] atm 10 sky"
 
 	// 以下別動
 	PRISM_URL = "https://github.com/PrismLauncher/PrismLauncher/releases/download/9.4/PrismLauncher-Windows-MinGW-w64-Portable-9.4.zip"
 	ICON_URL  = "https://raw.githubusercontent.com/octoberserver/ipd-launcher-installer/refs/heads/main/october.ico"
 )
 
+//go:embed config.yml
+var config []byte
+
 func main() {
+	var cfg struct {
+		ModpackURL  string `yaml:"modpack_url"`
+		ModpackName string `yaml:"modpack_name"`
+	}
+	if err := yaml.Unmarshal(config, &cfg); err != nil {
+		panic(err)
+	}
+
 	appdata := os.Getenv("APPDATA")
 	prismDir := filepath.Join(appdata, "oct-launcher")
 	instancesDir := filepath.Join(prismDir, "instances")
@@ -51,13 +65,13 @@ func main() {
 	}
 
 	// 安裝模組包
-	modpackDir := filepath.Join(instancesDir, MODPACK_NAME)
+	modpackDir := filepath.Join(instancesDir, cfg.ModpackName)
 	if _, err := os.Stat(modpackDir); os.IsNotExist(err) {
 		fmt.Println("未偵測到模組包，開始下載...")
 		os.MkdirAll(instancesDir, 0755)
 
-		modpackZip := filepath.Join(filepath.Dir(prismDir), MODPACK_NAME+".zip")
-		download(MODPACK_URL, modpackZip)
+		modpackZip := filepath.Join(filepath.Dir(prismDir), cfg.ModpackName+".zip")
+		download(cfg.ModpackURL, modpackZip)
 
 		prismExe := filepath.Join(prismDir, "prismlauncher.exe")
 		cmd := exec.Command(prismExe,

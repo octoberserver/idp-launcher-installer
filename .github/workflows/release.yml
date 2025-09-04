@@ -39,13 +39,13 @@ jobs:
 
     - name: Build
       run: |
-        go build -o "oct_mod_launcher_${{ env.VERSION }}.exe" .
+        go build -o "oct_mod_installer_${{ env.VERSION }}.exe" .
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: oct_mod_launcher_${{ env.VERSION }}
-        path: oct_mod_launcher_${{ env.VERSION }}.exe
+        name: oct_mod_installer_${{ env.VERSION }}
+        path: oct_mod_installer_${{ env.VERSION }}.exe
 
     - name: Create Release
       id: create_release
@@ -53,7 +53,7 @@ jobs:
       with:
         tag_name: ${{ env.VERSION }}
         name: Release ${{ env.VERSION }}
-        files: oct_mod_launcher_${{ env.VERSION }}.exe
+        files: oct_mod_installer_${{ env.VERSION }}.exe
         draft: false
         prerelease: false
       env:

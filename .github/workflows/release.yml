@@ -26,13 +26,10 @@ jobs:
     #   run: echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV
     #   shell: bash
 
-    - name: Install yq
-      run: sudo apt-get install -y yq
-
-    - name: Read config.yml
-      id: read_yaml
+    - name: Read version
       run: |
-        echo "VERSION=$(yq '.version' config.yml)" >> $GITHUB_ENV
+        $config = ConvertFrom-Yaml (Get-Content config.yml -Raw)
+        echo "MODPACK_URL=$($config.version)" >> $env:GITHUB_ENV
 
     - name: Build
       run: |

@@ -26,10 +26,16 @@ jobs:
     #   run: echo "VERSION=$(cat version.txt)" >> $GITHUB_ENV
     #   shell: bash
 
+    - name: Install PowerShell-Yaml
+      shell: pwsh
+      run: |
+        Install-Module -Name powershell-yaml -Force -Scope CurrentUser
+        Import-Module powershell-yaml
+
     - name: Read version
       run: |
         $config = ConvertFrom-Yaml (Get-Content config.yml -Raw)
-        echo "MODPACK_URL=$($config.version)" >> $env:GITHUB_ENV
+        echo "VERSION=$($config.version)" >> $env:GITHUB_ENV
 
     - name: Build
       run: |

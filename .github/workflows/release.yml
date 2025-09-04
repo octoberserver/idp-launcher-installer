@@ -28,13 +28,13 @@ jobs:
 
     - name: Build
       run: |
-        go build -o "十月模組包安裝器(${{ env.VERSION }}).exe" .
+        go build -o "oct mod launcher ${{ env.VERSION }}.exe" .
 
     - name: Upload artifact
       uses: actions/upload-artifact@v4
       with:
-        name: 十月模組包安裝器(${{ env.VERSION }})
-        path: 十月模組包安裝器(${{ env.VERSION }}).exe
+        name: oct mod launcher ${{ env.VERSION }}
+        path: oct mod launcher ${{ env.VERSION }}.exe
 
     - name: Create Release
       id: create_release
@@ -42,7 +42,7 @@ jobs:
       with:
         tag_name: ${{ env.VERSION }}
         name: Release ${{ env.VERSION }}
-        files: 十月模組包安裝器(${{ env.VERSION }}).exe
+        files: oct mod launcher ${{ env.VERSION }}.exe
         draft: false
         prerelease: false
       env:

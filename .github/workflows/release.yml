@@ -5,7 +5,7 @@ on:
     branches: [ "*" ]
     paths:
       - '**.go'
-      - 'version.txt'
+      - 'config.yml'
       - '.github/workflows/release.yml'
   workflow_dispatch:  # Allow manual triggering
 

@@ -20,7 +20,7 @@ const (
 
 	// 以下別動
 	PRISM_URL = "https://github.com/PrismLauncher/PrismLauncher/releases/download/9.4/PrismLauncher-Windows-MinGW-w64-Portable-9.4.zip"
-	ICON_URL  = "https://raw.githubusercontent.com/octoberserver/ipd-launcher-installer/refs/heads/main/october.ico"
+	ICON_URL  = "https://raw.githubusercontent.com/octoberserver/ipd-launcher-installer/refs/heads/main/omli.ico"
 )
 
 //go:embed config.yml
